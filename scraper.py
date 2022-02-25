@@ -74,12 +74,18 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         acs = int(acs)
         print(f'Data append: {i}')
         win = True
+
         kda = kda.split(sep="/")
         k = int(kda[0])
         d = int(kda[1])
         a = int(kda[2])
+
         score_won = int(score_won)
         score_lost = int(score_lost)
+
+        if score_won <= score_lost:
+            win = False 
+
         agent = agent_finder(agent_url)
         match_json = {
             'id' : i,
@@ -104,7 +110,7 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         if i == 201:
             break
 time.sleep(1)
-
+print('Data succesfully appended.')
 
 filename = 'data/game_data.json'
 with open (filename, 'w') as outfile:
