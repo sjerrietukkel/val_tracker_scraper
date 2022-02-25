@@ -4,19 +4,22 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException        
 import time
 
+with open('data/all_agents.json') as agent_file:
+    agents = json.load(agent_file)
+
 driver = webdriver.Chrome(ChromeDriverManager().install())
 data = []
 username = str(input("Input username: "))
 hash = str(input("Input hash: "))
 URL = f"https://tracker.gg/valorant/profile/riot/{username}%23{hash}/matches"
-
+print(agents)
 
 driver.get(URL)
-driver.implicitly_wait(15) #allow some time to fully load, you may tweak accordingly
+driver.implicitly_wait(5) #allow some time to fully load, you may tweak accordingly
 
 
 def check_exists_by_xpath(xpath):
-    time.sleep(2)
+    time.sleep(1)
     try:
         driver.find_element_by_xpath(xpath)
         print("Located and clicked 'Load More'...")
@@ -24,6 +27,9 @@ def check_exists_by_xpath(xpath):
         print("Func NSE, proceed to retrieve data...")
         return False
     return True
+
+
+
 
 
 loadMoreButton = driver.find_element_by_xpath('//span[@class="trn-gamereport-list__group-more"]')
@@ -49,6 +55,8 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         score_lost = score_lost.text
         placement = match.find_element_by_css_selector('div.badge')
         placement = placement.text
+        agent_url = match.find_element_by_css_selector('.match__portrait img').get_attribute('src')
+        agent = match.find_element_by_css_selector('.match__portrait img').get_attribute('src')
         kda = match.find_element_by_css_selector('div.match__row-stats > div:nth-of-type(1) > div.value')
         kda = kda.text
         kd = match.find_element_by_css_selector('div.match__row-stats > div:nth-of-type(2) > div.value')
@@ -72,13 +80,10 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         score_won = int(score_won)
         score_lost = int(score_lost)
 
-
-        if score_won <= score_lost:
-            win = False
-
         match_json = {
             'id' : i,
             'map': title,
+            'agent': agent,
             'time': time_match, 
             'mode': mode,
             'score_won': score_won,
@@ -95,7 +100,9 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         }
         i = i + 1
         data.append(match_json)
-time.sleep(5)
+        if i == 201:
+            break
+time.sleep(1)
 
 
 filename = 'data/game_data.json'
