@@ -6,8 +6,8 @@ import time
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 data = []
-username = str(input("input username"))
-hash = str(input("input hash"))
+username = str(input("Input username: "))
+hash = str(input("Input hash: "))
 URL = f"https://tracker.gg/valorant/profile/riot/{username}%23{hash}/matches"
 
 
@@ -53,18 +53,28 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         kda = kda.text
         kd = match.find_element_by_css_selector('div.match__row-stats > div:nth-of-type(2) > div.value')
         kd = kd.text
+        kd = float(kd)
         hs = match.find_element_by_css_selector('div.match__row-stats > div:nth-of-type(3) > div.value')
         hs = hs.text
+        hs = float(hs)
         adr = match.find_element_by_css_selector('div.match__row-stats > div:nth-of-type(4) > div.value')
         adr = adr.text
+        adr = int(adr)
         acs = match.find_element_by_css_selector('div.match__row-stats > div:nth-of-type(4) > div.value')
         acs = acs.text
-        print('data append')
-
+        acs = int(acs)
+        print(f'Data append: {i}')
+        win = True
         kda = kda.split(sep="/")
-        k = kda[0]
-        d = kda[1]
-        a = kda[2]
+        k = int(kda[0])
+        d = int(kda[1])
+        a = int(kda[2])
+        score_won = int(score_won)
+        score_lost = int(score_lost)
+
+
+        if score_won <= score_lost:
+            win = False
 
         match_json = {
             'id' : i,
@@ -72,7 +82,8 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
             'time': time_match, 
             'mode': mode,
             'score_won': score_won,
-            'score_lost': score_lost, 
+            'score_lost': score_lost,
+            'win' : win, 
             'placement': placement,
             'kills' : k,
             'deaths' : d,
