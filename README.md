@@ -4,6 +4,7 @@ Outputs a `.json` file.
 
 ### Installation
 ```py
+git clone
 pip install requirements.txt
 python scraper.py
 ```
