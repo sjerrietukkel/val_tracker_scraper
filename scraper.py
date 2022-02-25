@@ -1,7 +1,8 @@
 import json
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.common.exceptions import NoSuchElementException        
+from selenium.common.exceptions import NoSuchElementException   
+from agentfinder import agent_finder
 import time
 
 with open('data/all_agents.json') as agent_file:
@@ -79,7 +80,7 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         a = int(kda[2])
         score_won = int(score_won)
         score_lost = int(score_lost)
-
+        agent = agent_finder(agent_url)
         match_json = {
             'id' : i,
             'map': title,
