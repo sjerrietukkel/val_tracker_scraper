@@ -1,19 +1,17 @@
 import json
+from numpy import place
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException   
 from agentfinder import agent_finder
+import re
 import time
-
-with open('data/all_agents.json') as agent_file:
-    agents = json.load(agent_file)
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 data = []
 username = str(input("Input username: "))
 hash = str(input("Input hash: "))
 URL = f"https://tracker.gg/valorant/profile/riot/{username}%23{hash}/matches"
-print(agents)
 
 driver.get(URL)
 driver.implicitly_wait(5) #allow some time to fully load, you may tweak accordingly
@@ -28,10 +26,6 @@ def check_exists_by_xpath(xpath):
         print("Func NSE, proceed to retrieve data...")
         return False
     return True
-
-
-
-
 
 loadMoreButton = driver.find_element_by_xpath('//span[@class="trn-gamereport-list__group-more"]')
 while check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == True:
@@ -75,6 +69,12 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         print(f'Data append: {i}')
         win = True
 
+        if placement == "MVP":
+            placement = 1
+        else:
+            placement = re.sub("[^0-9]", "", placement)
+            placement = int(placement)
+
         kda = kda.split(sep="/")
         k = int(kda[0])
         d = int(kda[1])
@@ -112,7 +112,7 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
 time.sleep(1)
 print('Data succesfully appended.')
 
-filename = 'data/game_data.json'
+filename = f'data/priv_data/game_data_{username}.json'
 with open (filename, 'w') as outfile:
     json.dump(data, outfile)
 driver.quit()
