@@ -104,6 +104,7 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
             'hs_percentage' : hs,
             'damage_per_round' : adr,
             'combat_score_total' : acs,
+            'username': username,
         }
         i = i + 1
         data.append(match_json)
