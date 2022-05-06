@@ -4,6 +4,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import NoSuchElementException   
 from agentfinder import agent_finder
+from agentfinder import class_finder
 import re
 import time
 
@@ -51,7 +52,6 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
         placement = match.find_element_by_css_selector('div.badge')
         placement = placement.text
         agent_url = match.find_element_by_css_selector('.match__portrait img').get_attribute('src')
-        agent = match.find_element_by_css_selector('.match__portrait img').get_attribute('src')
         kda = match.find_element_by_css_selector('div.match__row-stats > div:nth-of-type(1) > div.value')
         kda = kda.text
         kd = match.find_element_by_css_selector('div.match__row-stats > div:nth-of-type(2) > div.value')
@@ -87,10 +87,12 @@ if check_exists_by_xpath('//span[@class="trn-gamereport-list__group-more"]') == 
             win = False 
 
         agent = agent_finder(agent_url)
+        role = class_finder(agent_url)
         match_json = {
             'id' : i,
             'map': title,
             'agent': agent,
+            'class': role,
             'time': time_match, 
             'mode': mode,
             'score_won': score_won,
