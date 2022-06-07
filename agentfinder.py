@@ -23,8 +23,10 @@ def agent_finder(agent_url):
         return "Astra"
     elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png':
         return "Killjoy"
-    elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png':
+    elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png':
         return "Skye"
+    elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png':
+        return "Raze"
     elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png':
         return "Viper"
     elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/7f94d92c-4234-0a36-9646-3a87eb8b5c89/displayicon.png':
@@ -63,8 +65,10 @@ def class_finder(agent_url):
         return "Controller"
     elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/1e58de9c-4950-5125-93e9-a0aee9f98746/displayicon.png':
         return "Sentinel"
-    elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png':
+    elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/6f2a04ca-43e0-be17-7f36-b3908627744d/displayicon.png':
         return "Initiator"
+    elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/f94c3b30-42be-e959-889c-5aa313dba261/displayicon.png':
+        return "Duelist"
     elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/707eab51-4836-f488-046a-cda6bf494859/displayicon.png':
         return "Controller"
     elif agent_url == 'https://titles.trackercdn.com/valorant-api/agents/7f94d92c-4234-0a36-9646-3a87eb8b5c89/displayicon.png':
